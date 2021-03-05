@@ -1,33 +1,25 @@
-import React from 'react';
+import React from "react";
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   constructor() {
     super();
+
     this.state = {
       username: '',
       password: ''
     };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const username = this.state.username
-    const password = this.state.password
-    if (username !== "" && password !== "") {
-      this.props.onSubmit({username, password})
-      this.setState({
-        username: '',
-        password: ''
-      });
-    }
-  }
-
-  handleInputChange(event) {
+  handleInputChange = event => {
     this.setState({
       [event.target.name]: event.target.value
-    });
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    if (!this.state.username || !this.state.password) return
+    this.props.handleLogin(this.state)
   }
 
   render() {
@@ -36,13 +28,13 @@ export default class LoginForm extends React.Component {
         <div>
           <label>
             Username
-            <input id="test-username" type="text" name="username" value={this.state.username} onChange={this.handleInputChange}/>
+            <input id="username" name="username" type="text" value={this.state.username} onChange={this.handleInputChange}/>
           </label>
         </div>
         <div>
           <label>
             Password
-            <input id="test-password" type="password" name="password" value={this.state.password} onChange={this.handleInputChange}/>
+            <input id="password" name="password" type="password" value={this.state.password} onChange={this.handleInputChange}/>
           </label>
         </div>
         <div>
@@ -52,3 +44,5 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+export default LoginForm;
